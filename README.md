@@ -18,6 +18,12 @@ More suitable applications include:
  - A Linux server which has Borg installed (check the system package manager)
  - A Kubernetes cluster
 
+## Caveats
+
+ - Do not use for task that require high data consistency, or cannot tolerate data loss.
+ - Completely unsuitable for multiple parallel pods, and backup/restore may be inconsistent depending on the deployment policy for the service.
+ - The backup server for Borg is itself a single point of failure - this may need some further development to solve that.
+
 ## Installation
 
 Create an SSH keypair:
