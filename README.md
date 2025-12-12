@@ -44,6 +44,26 @@ Create the secret in Kubernetes:
 
     kubectl create secret generic my-ssh-secret --from-file=ssh-privatekey=./my_key --from-file=ssh-publickey=./my_key.pub
 
+Alternatively if you need the create the secret in a Kubernetes secret file, then base64 encode it:
+
+    base64 -w0 my_key
+    <PRIVATE KEY CONTENTS>
+    base64 -w0 my_key.pub
+    <PUBLIC KEY CONENTS>
+
+Then Create the Kubernetes secret file - make sure there are no newlines in the base64-encoded values:
+
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: my-ssh-secret
+    type: generic
+    data:
+       ssh-privatekey: |
+         <PRIVATE KEY CONTENTS>
+       ssh-publickey: |
+         <PUBLIC KEY CONENTS>
+
 You should be able to add the sidecar to an existing deployment/pod:
 
       initContainers:
